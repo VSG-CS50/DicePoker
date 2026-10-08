@@ -2,7 +2,7 @@
     background-color: #1f1f1f;
     color: #2079e6;
     text-align: center;
-    padding: 2rem 2rem;
+    padding: 0.5rem 2rem;
 }
 
 .navbar {
@@ -46,12 +46,25 @@
 .table {
     margin: 0 auto;
     text-align: center;
-    width: 600px;
+    width: 575px;
 
 }
 
 .dice {
-    width: 8%;
+    width: 5%;
     height:auto;
-    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+}
+
+.dice.highlight {
+    box-shadow: 0 0 15px 5px white;
+}
+
+body {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
