@@ -66,23 +66,16 @@ def aiplay(dice):
         reroll = []
 
     else:
-        max = 0
-        for value, count in counts.items():
-            if count > max:
-                max = count
+        maxcount = max(counts.values())
 
         keep = []
         for value, count in counts.items():
-            if count == max:
+            if count == maxcount:
                 keep.append(value)
 
-        reroll = []
         for i in range(len(dice)):
             if dice[i] not in keep:
-                reroll.append(i)
-
-    for i in reroll:
-        dice[i] = random.randint(1, 6)
+                dice[i] = random.randint(1, 6)
     return dice
 
 
@@ -91,40 +84,59 @@ def game(level):
     aidice = rolldice(NOOFDICE)
     score, hand = evalhand(dice)
     aiscore, aihand = evalhand(aidice)
+    highlight = highlightdice(dice)
+    aihighlight = highlightdice(aidice)
 
     session["dice"] = dice
     session["aidice"] = aidice
     session["level"] = level
 
-    return render_template("index.html", dice=dice, aidice=aidice, hand=hand, aihand=aihand, result="", level=level)
+    return render_template("index.html", dice=dice, aidice=aidice, hand=hand, aihand=aihand, result="", level=level, highlight=highlight, aihighlight=aihighlight)
+
+
+def highlightdice(dice):
+    hand = Counter(dice)
+    highlight = [False] * len(dice)
+
+    for i in range(len(dice)):
+        value = dice[i]
+        if hand[value] > 1:
+            highlight[i] = True
+
+    if dice == [1, 2, 3, 4, 5] or dice == [2, 3, 4, 5, 6]:
+        highlight = [True] * len(dice)
+
+    return highlight
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         action = request.form.get("action")
+
         if action == "start":
             session.clear()
+            session["level"] = 1
             username = request.form.get("username")
             if username:
                 session["username"] = username
             return game(level=1)
 
         elif action == "restart":
-            session["level"] = 1
+            level = session.get("level", 1)
             return game(level=1)
 
         elif action == "next":
-            level = session.get("level") + 1
+            level = session.get("level", 1) + 1
             return game(level=level)
 
         elif action == "replay":
-            level = session.get("level")
+            level = session.get("level", 1)
             return game(level=level)
 
         else:
-            dice = session.get("dice", rolldice(NOOFDICE))
-            aidice = session.get("aidice", rolldice(NOOFDICE))
+            dice = session.get("dice")
+            aidice = session.get("aidice")
             level = session.get("level", 1)
 
             reroll = request.form.getlist("reroll")
@@ -141,6 +153,8 @@ def index():
 
             score, hand = evalhand(dice)
             aiscore, aihand = evalhand(aidice)
+            highlight = highlightdice(dice)
+            aihighlight = highlightdice(aidice)
 
             if score > aiscore:
                 result = "Player wins!"
@@ -157,7 +171,7 @@ def index():
             else:
                 result = "It's a tie"
 
-            return render_template("index.html", dice=dice, hand=hand, aidice=aidice, aihand=aihand, result=result, level=level)
+            return render_template("index.html", dice=dice, hand=hand, aidice=aidice, aihand=aihand, result=result, level=level, highlight=highlight, aihighlight=aihighlight)
 
     else:
         return render_template("index.html", dice=[], aidice=[], result="", level="")
@@ -165,10 +179,12 @@ def index():
 
 @app.route("/howtoplay")
 def howtoplay():
+
     return render_template("howtoplay.html")
 
 
 @app.route("/leaderboard")
 def leaderboard():
-    players = db.execute("SELECT * FROM players ORDER BY LEVEL DESC")
+
+    players = db.execute("SELECT * FROM players ORDER BY LEVEL DESC LIMIT 10")
     return render_template("leaderboard.html", players=players)
