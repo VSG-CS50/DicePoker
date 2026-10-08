@@ -77,8 +77,8 @@ body {
     }
 
     input[type="checkbox"] {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
         margin: 0;
         accent-color: #2079e6;
         cursor: pointer;
