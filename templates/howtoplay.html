@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    How to Play
+{% endblock %}
+
+{% block main %}
+
+    <div class="txbody">
+        <h4>How to play DicePoker</h4>
+        <p></p>
+        DicePoker is a mix of strategy and change. You and the AI roll 5 dice to create the best possible poker hand to win.
+        <p></p>
+        <h4>Game Setup</h4>
+        <ul class="txbody">
+            <li>Click on "Start Game" to begin a new game</li>
+            <li>Each player rolls 5 dice at the start of the game</li>
+            <li>The AI's hand is shown on the top and your hand is shown on the bottom</li>
+        </ul>
+        <h4>Reroll Phase</h4>
+        <ul class="txbody">
+            <li>You can reroll once all, some, or none of the dice</li>
+            <li>Click on "Reroll" to continue after deciding how many dice to reroll</li>
+            <li>The AI will also choose and reroll dice based on its own strategy</li>
+        </ul>
+        <h4>Result</h4>
+        <ul class="txbody">
+            <li>After rerolling, the hands are evaluated based on the ranking below</li>
+            <!-- <p></p> -->
+            <!-- <li>(BEST)</li>
+            <li>Five of a Kind: [3,3,3,3,3]</li>
+            <li>Four of a Kind: [2,3,3,3,3]</li>
+            <li>Full House: [2,2,3,3,3]</li>
+            <li>Straight: [1,2,3,4,5]</li>
+            <li>Three of a Kind: [1,2,3,3,3]</li>
+            <li>Two Pair: [1,2,2,3,3]</li>
+            <li>One Pair: [1,2,2,3,4]</li>
+            <li>High Die: [1,2,4,5,6]</li>
+            <li>(WORST)</li> -->
+        </ul>
+        <!-- <p></p> -->
+        (BEST ROLLS AT TOP OF TABLE)
+        <p></p>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Roll</th>
+                    <th>Example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Five of a Kind</td>
+                    <td>3, 3, 3, 3, 3</td>
+                </tr>
+                <tr>
+                    <td>Four of a Kind</td>
+                    <td>2, 3, 3, 3, 3</td>
+                </tr>
+                <tr>
+                    <td>Full House</td>
+                    <td>2, 2, 3, 3, 3</td>
+                </tr>
+                <tr>
+                    <td>Straight</td>
+                    <td>1, 2, 3, 4, 5</td>
+                </tr>
+                <tr>
+                    <td>Three of a Kind</td>
+                    <td>1, 2, 3, 3, 3</td>
+                </tr>
+                <tr>
+                    <td>Two Pair</td>
+                    <td>2, 2, 3, 3, 5</td>
+                </tr>
+                <tr>
+                    <td>One Pair</td>
+                    <td>2, 3, 3, 5, 6</td>
+                </tr>
+                <tr>
+                    <td>High Die</td>
+                    <td>1, 2, 3, 4, 6</td>
+                </tr>
+            </tbody>
+        </table>
+        <p></p>
+        (WORST ROLLS AT TOP OF TABLE)
+    </div>
+
+{% endblock %}

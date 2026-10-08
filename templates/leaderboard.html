@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Leaderboard
+{% endblock %}
+
+{% block main %}
+<!-- 
+{% for player in players %}
+    {{player}}
+    <p></p>
+    {% endfor %} -->
+    <div class="txbody">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Max Level</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in players %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{player.NAME}}</td>
+                        <td>{{player.LEVEL}}</td>
+                        <td>{{player.DATE}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

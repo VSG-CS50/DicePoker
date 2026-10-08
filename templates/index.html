@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Play
+{% endblock %}
+
+{% block main %}
+    <div class="txbody">
+        <p></p>
+        {% if aidice %}
+            <h4>AI's Hand</h4>
+            {{aihand}}
+            <p></p>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        {% for die in aidice %}
+                <!-- <th>{{ die }}</th> -->
+                            <img src="/static/AIDie{{die}}.png" class="dice" alt="{{die}}">
+                        {% endfor %}
+                    </tr>
+                </thead>
+            </table>
+
+            <p></p>
+            <h3>Level {{level}}</h3>
+            <h3>{{ result }}</h3>
+            <p></p>
+        {% endif %}
+
+        {% if dice %}
+            <form action="/" method="post">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            {% for die in dice %}
+                    <!-- <th>{{ die }}</th> -->
+                                <img src="/static/Die{{die}}.png" class="dice" alt="{{die}}">
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% if result == "" %}
+                                {% for die in dice %}
+                                    <td>
+                                        <input type="checkbox" name="reroll" value="{{ loop.index0 }}">
+                                    </td>
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p></p>
+                <h4>{{session.username | default("Player")}}'s Hand</h4>
+                <p></p>
+                {{hand}}
+                <p></p>
+
+                {% if result == "" %}
+                    <button class="btn btn-primary" type="submit">Re-Roll and Submit</button>
+                {% elif result == "Player wins!" %}
+                    <button class="btn btn-success" type="submit" name="action" value="next">Next Level</button>
+                {% elif result == "It's a tie" %}
+                    <button class="btn btn-secondary" type="submit" name="action" value="replay">Replay Level</button>
+                {% elif result == "AI wins!" %}
+                    <button class="btn btn-danger" type="submit" name="action" value="restart">Start New Game</button>
+                {% endif %}
+            </form>
+
+        {% else %}
+            <form action="/" method="post">
+                <input autocomplete="off" name="username" placeholder="Enter Name" class="form-control mx-auto w-auto">
+                <p></p>
+                <button class="btn btn-primary" type="submit" name="action" value="start">Start Game</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
