@@ -6,7 +6,7 @@
 
 {% block main %}
     <div class="txbody">
-        <p></p>
+        <!-- <p></p> -->
         {% if aidice %}
             <h4>AI's Hand</h4>
             {{aihand}}
@@ -16,13 +16,12 @@
                     <tr>
                         {% for die in aidice %}
                 <!-- <th>{{ die }}</th> -->
-                            <img src="/static/AIDie{{die}}.png" class="dice" alt="{{die}}">
+                            <img src="/static/AIDie{{die}}.png" alt="{{die}}" class="dice {% if aihighlight[loop.index0] %}highlight{% endif %}">
                         {% endfor %}
                     </tr>
                 </thead>
             </table>
 
-            <p></p>
             <h3>Level {{level}}</h3>
             <h3>{{ result }}</h3>
             <p></p>
@@ -35,7 +34,7 @@
                         <tr>
                             {% for die in dice %}
                     <!-- <th>{{ die }}</th> -->
-                                <img src="/static/Die{{die}}.png" class="dice" alt="{{die}}">
+                                <img src="/static/Die{{die}}.png" alt="{{die}}" class="dice {% if highlight[loop.index0] %}highlight{% endif %}">
                             {% endfor %}
                         </tr>
                     </thead>
@@ -70,6 +69,11 @@
             </form>
 
         {% else %}
+        <h1>Welcome to DicePoker</h1>
+         <p></p>
+         <h2>Enter your name (optional) to start</h2>
+         <p></p>
+         <p></p>
             <form action="/" method="post">
                 <input autocomplete="off" name="username" placeholder="Enter Name" class="form-control mx-auto w-auto">
                 <p></p>
